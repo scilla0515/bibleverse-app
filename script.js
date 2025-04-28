@@ -1,35 +1,24 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Set today's date
-  const today = new Date();
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  document.getElementById('date').innerText = today.toLocaleDateString('en-US', options);
+// Set today's date
+const dateElement = document.getElementById('date');
+const today = new Date();
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+dateElement.textContent = today.toLocaleDateString(undefined, options);
 
-  // List of references to choose from (can grow this list)
-  const verseReferences = [
-    "Jeremiah 29:11",
-    "Psalm 23:1",
-    "Philippians 4:13",
-    "Proverbs 3:5",
-    "Isaiah 41:10",
-    "Romans 8:28",
-    "Matthew 5:14",
-    "Joshua 1:9"
-  ];
+// Fetch a daily Bible verse
+async function fetchVerse() {
+  try {
+    const response = await fetch('https://beta.ourmanna.com/api/v1/get/?format=json');
+    const data = await response.json();
+    const verseText = data.verse.details.text;
+    const bookName = `${data.verse.details.reference}`;
 
-  // Pick a "daily" reference based on the day of the year
-  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-  const verseIndex = dayOfYear % verseReferences.length;
-  const selectedReference = verseReferences[verseIndex];
+    document.getElementById('verse').textContent = verseText;
+    document.getElementById('book').textContent = bookName;
+  } catch (error) {
+    document.getElementById('verse').textContent = "Could not load verse. Please try again later.";
+    console.error("Error fetching verse:", error);
+  }
+}
 
-  // Fetch from Bible API
-  fetch(`https://bible-api.com/${encodeURIComponent(selectedReference)}`)
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById('verse').innerText = `"${data.text.trim()}"`;
-      document.getElementById('book').innerText = `— ${data.reference}`;
-    })
-    .catch(error => {
-      console.error('Error fetching verse:', error);
-      document.getElementById('verse').innerText = "Unable to load verse. Please try again later.";
-    });
-});
+// Load the verse when page loads
+fetchVerse();
