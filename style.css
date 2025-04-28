@@ -1,57 +1,59 @@
 body {
+  background-color: #fdfaf6; /* soft parchment color */
+  font-family: 'Bellefair', serif;
   margin: 0;
   padding: 0;
-  font-family: 'Bellefair', serif;
-  background: #fdfaf6;
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
-.container {
-  background: url('https://i.imgur.com/QB7eW0O.png') center/cover no-repeat;
-  background-size: contain;
+.bible-container {
+  background: linear-gradient(to right, #ffffff 49%, #f9f6f2 50%, #ffffff 51%);
   width: 90%;
-  max-width: 600px;
-  height: 400px;
-  padding: 2rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  max-width: 700px;
+  padding: 50px 40px;
+  border: 2px solid #d8cfc4;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  border-radius: 20px;
   position: relative;
+  animation: fadeIn 1s ease-in;
 }
 
-h1 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-  color: #5e4033;
+.bible-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: #e0d8ce;
+  transform: translateX(-50%);
 }
 
-#date {
-  font-size: 1rem;
+.date {
+  font-size: 1.2rem;
+  color: #7a6650;
   margin-bottom: 20px;
-  color: #8a6f5c;
 }
 
-#verse {
-  font-size: 1.4rem;
-  margin: 20px 0;
+.daily-verse {
+  font-size: 1.6rem;
   color: #5e4033;
-  padding: 0 1rem;
-  line-height: 1.6;
+  line-height: 1.8;
 }
 
-#book {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #8a6f5c;
-  margin-top: 10px;
+.book-name {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #7a6650;
 }
 
-/* Hide the button since we want only 1 verse/day */
-button {
-  display: none;
+/* Optional: soft fade-in animation when verse loads */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
